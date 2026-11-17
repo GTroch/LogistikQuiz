@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logistik im Takt – Quiz: Wie funktioniert moderne Logistik heute?</title>
+<style>
+:root{
+  --navy:#14213d; --navy2:#1f2f52; --ink:#1b1f2a; --muted:#5d6577;
+  --paper:#f6f3ec; --card:#ffffff; --line:#e3ddd0;
+  --amber:#f2a518; --amber-d:#c98200; --kraft:#c8a46a;
+  --p1:#2a7de1; --p2:#e2513b; --ok:#2f9e6b;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;
+  background-image:repeating-linear-gradient(90deg,rgba(20,33,61,.025) 0 1px,transparent 1px 40px),repeating-linear-gradient(0deg,rgba(20,33,61,.025) 0 1px,transparent 1px 40px);}
+button{font:inherit;cursor:pointer}
+header.top{background:var(--navy);color:#fff;position:relative}
+header.top::after{content:"";display:block;height:8px;background:repeating-linear-gradient(-45deg,var(--amber) 0 14px,var(--navy) 14px 28px)}
+.top-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.logo{width:40px;height:40px;flex:none}
+.top h1{font-size:1.05rem;margin:0;font-weight:700;letter-spacing:.2px}
+.top small{display:block;color:#aeb8d0;font-weight:400;font-size:.8rem}
+.top .home{margin-left:auto;background:transparent;border:1px solid #4a5a80;color:#dfe5f3;border-radius:999px;padding:6px 14px;font-size:.85rem}
+.top .home:hover{background:#24365e}
+main{max-width:1000px;margin:0 auto;padding:24px 20px 60px}
+.screen{display:none;animation:fade .25s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Start */
+.hero{text-align:center;padding:20px 0 10px}
+.hero h2{font-size:clamp(1.6rem,4vw,2.4rem);margin:.2em 0;color:var(--navy)}
+.hero p{color:var(--muted);max-width:620px;margin:0 auto 26px;line-height:1.5}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.mode{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:24px;text-align:left;transition:.15s;position:relative;overflow:hidden}
+.mode:hover{border-color:var(--amber);transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,33,61,.08)}
+.mode h3{margin:10px 0 6px;color:var(--navy);font-size:1.25rem}
+.mode p{margin:0;color:var(--muted);line-height:1.45;font-size:.95rem}
+.mode .ic{font-size:2rem}
+.mode .tag{position:absolute;top:14px;right:14px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:var(--paper);color:var(--navy);padding:4px 8px;border-radius:6px}
+
+/* Setup */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:0 4px 18px rgba(20,33,61,.05)}
+.panel h2{margin:0 0 4px;color:var(--navy)}
+.panel .sub{color:var(--muted);margin:0 0 20px}
+.field{margin-bottom:22px}
+.field > label,.field .lbl{display:block;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:var(--navy2);margin-bottom:8px}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.names input{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:10px;font:inherit;background:#fffdf8}
+.names input:focus{outline:none;border-color:var(--amber)}
+.names .p1 input{border-left:6px solid var(--p1)}
+.names .p2 input{border-left:6px solid var(--p2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:2px solid var(--line);background:#fffdf8;border-radius:10px;padding:10px 16px;font-weight:600;color:var(--navy2)}
+.seg button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.levels{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.level{border:2px solid var(--line);background:#fffdf8;border-radius:12px;padding:14px 16px;text-align:left}
+.level b{display:block;color:var(--navy);font-size:1.05rem}
+.level span{color:var(--muted);font-size:.88rem}
+.level.on{border-color:var(--amber);background:#fff6e2;box-shadow:inset 0 0 0 1px var(--amber)}
+.cats{display:flex;flex-wrap:wrap;gap:8px}
+.cat{border:2px solid var(--line);background:#fffdf8;border-radius:999px;padding:7px 12px;font-size:.88rem;color:var(--muted)}
+.cat.on{border-color:var(--navy2);color:var(--navy);background:#eef2fa;font-weight:600}
+.cat b{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:5px;background:var(--kraft);color:#fff;font-size:.75rem;margin-right:4px}
+.mini{background:none;border:none;color:var(--navy2);text-decoration:underline;font-size:.85rem;padding:0;margin-left:8px}
+.hint{font-size:.85rem;color:var(--muted);margin-top:8px}
+.go{display:flex;justify-content:flex-end;gap:12px;align-items:center;margin-top:6px}
+.btn{border:none;border-radius:12px;padding:13px 22px;font-weight:700;font-size:1rem}
+.btn.primary{background:var(--amber);color:var(--navy);box-shadow:0 3px 0 var(--amber-d)}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn.primary:active{transform:translateY(2px);box-shadow:0 1px 0 var(--amber-d)}
+.btn.ghost{background:transparent;border:2px solid var(--line);color:var(--navy2)}
+.btn.dark{background:var(--navy);color:#fff;box-shadow:0 3px 0 #0a1224}
+
+/* Play */
+.bar{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.prog{flex:1;min-width:180px}
+.prog .txt{font-size:.85rem;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.track{height:10px;background:#e7e1d4;border-radius:999px;overflow:hidden}
+.track i{display:block;height:100%;background:repeating-linear-gradient(-45deg,var(--amber) 0 8px,#f5b844 8px 16px);width:0;transition:width .4s}
+.scores{display:flex;gap:12px;margin-bottom:16px}
+.pl{flex:1;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;transition:.2s;position:relative}
+.pl .dot{width:12px;height:12px;border-radius:50%}
+.pl .nm{font-weight:700;color:var(--navy);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pl .st{font-weight:800;font-size:1.25rem;color:var(--navy)}
+.pl .st span{color:var(--amber)}
+.pl.act{border-color:currentColor;box-shadow:0 0 0 3px rgba(0,0,0,.04),0 8px 18px rgba(20,33,61,.08);transform:translateY(-2px)}
+.pl.p1{color:var(--p1)} .pl.p2{color:var(--p2)} .pl.solo{color:var(--navy)}
+.pl.p1 .dot{background:var(--p1)} .pl.p2 .dot{background:var(--p2)} .pl.solo .dot{background:var(--amber)}
+.pl .turn{position:absolute;top:-10px;left:12px;background:currentColor;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:2px 8px;border-radius:6px;display:none}
+.pl .turn em{color:#fff;font-style:normal}
+.pl.act .turn{display:block}
+.pop{position:absolute;right:14px;top:-6px;color:var(--amber-d);font-weight:800;animation:pop 1s ease forwards;pointer-events:none}
+@keyframes pop{0%{opacity:0;transform:translateY(8px) scale(.8)}20%{opacity:1;transform:translateY(-6px) scale(1.1)}100%{opacity:0;transform:translateY(-26px)}}
+
+.qcard{background:var(--card);border-radius:18px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(20,33,61,.08);overflow:hidden;position:relative}
+.qhead{display:flex;align-items:center;gap:10px;padding:14px 22px;background:#fbf8f1;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+.chip{font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:6px;background:var(--kraft);color:#fff;text-transform:uppercase;letter-spacing:.5px}
+.chip.lv{background:var(--navy2)}
+.who{margin-left:auto;font-weight:700;font-size:.95rem}
+.qbody{padding:30px 26px 22px;min-height:180px}
+.term{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:800;color:var(--navy);margin:0 0 10px;line-height:1.15}
+.qtext{font-size:clamp(1.1rem,2.6vw,1.35rem);line-height:1.45;color:var(--ink);margin:0}
+.term + .qtext{color:var(--muted);font-size:1.08rem}
+.sol{display:none;margin:22px 0 0;background:#f2f7f4;border:1px solid #cfe5d8;border-left:6px solid var(--ok);border-radius:12px;padding:16px 18px 10px}
+.sol.on{display:block;animation:fade .3s}
+.sol h4{margin:0 0 8px;color:var(--ok);font-size:.85rem;text-transform:uppercase;letter-spacing:.6px}
+.sol ul{margin:0;padding-left:20px}
+.sol li{margin:0 0 7px;line-height:1.45}
+.actions{padding:0 26px 26px}
+.reveal{width:100%;padding:16px;font-size:1.1rem}
+.rate{display:none}
+.rate.on{display:block;animation:fade .3s}
+.rate p{margin:0 0 10px;font-weight:700;color:var(--navy2)}
+.rate p small{font-weight:400;color:var(--muted)}
+.stars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stars button{background:#fffdf8;border:2px solid var(--line);border-radius:12px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:.12s}
+.stars button:hover{border-color:var(--amber);background:#fff6e2;transform:translateY(-2px)}
+.stars .s{font-size:1.35rem;letter-spacing:2px;color:var(--amber);min-height:1.6rem}
+.stars .s .e{color:#d9d2c3}
+.stars .l{font-size:.8rem;color:var(--muted);text-align:center;line-height:1.25}
+.keys{font-size:.78rem;color:var(--muted);text-align:center;margin-top:14px}
+kbd{background:#fff;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:.75rem}
+
+/* End */
+.result{text-align:center;padding:10px 0 20px}
+.result .big{font-size:3.2rem}
+.result h2{margin:6px 0;color:var(--navy);font-size:clamp(1.5rem,4vw,2.1rem)}
+.result p{color:var(--muted);margin:0}
+.podium{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.pod{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+.pod.win{border-color:var(--amber);background:#fff6e2}
+.pod .n{font-weight:800;font-size:1.1rem}
+.pod .v{font-size:2.2rem;font-weight:800;color:var(--navy)}
+.pod .v span{color:var(--amber)}
+.pod small{color:var(--muted)}
+.meter{height:14px;background:#e7e1d4;border-radius:999px;overflow:hidden;max-width:420px;margin:16px auto 6px}
+.meter i{display:block;height:100%;background:var(--ok)}
+.review{margin-top:22px}
+.review h3{color:var(--navy);margin:0 0 10px;font-size:1.05rem}
+.rv{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--card)}
+.rv:first-of-type{border-radius:10px 10px 0 0}
+.rv .k{flex:none;width:58px;color:var(--amber);font-size:.95rem;letter-spacing:1px}
+.rv .k .e{color:#d9d2c3}
+.rv .t{flex:1;line-height:1.35}
+.rv .t small{display:block;color:var(--muted)}
+.rv .w{flex:none;width:10px;height:10px;border-radius:50%;margin-top:6px}
+details.sol2{margin-top:6px}
+details.sol2 summary{cursor:pointer;color:var(--navy2);font-size:.85rem}
+details.sol2 ul{margin:6px 0 0;padding-left:18px;color:var(--ink);font-size:.92rem}
+.endbtns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+
+.rubric{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.rubric div{background:#fbf8f1;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.82rem;color:var(--muted)}
+.rubric b{display:block;color:var(--amber-d)}
+
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:10px 20px 30px}
+@media (max-width:640px){
+  .names,.levels,.podium{grid-template-columns:1fr}
+  .stars{grid-template-columns:repeat(2,1fr)}
+  .rubric{grid-template-columns:1fr 1fr}
+  .qbody{padding:22px 18px 16px}.actions{padding:0 18px 20px}
+  .scores{flex-direction:column}
+}
+@media print{header.top,.go,.endbtns{display:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <svg class="logo" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M20 3 36 11v18L20 37 4 29V11z" fill="#c8a46a"/>
+      <path d="M20 3 36 11 20 19 4 11z" fill="#e0c48f"/>
+      <path d="M20 19v18L4 29V11z" fill="#b38d52"/>
+      <path d="M12 7 28 15v6l-4-2v-4L8 9z" fill="#f2a518"/>
+    </svg>
+    <div><h1>Logistik im Takt – Das Quiz</h1><small>Wie funktioniert moderne Logistik heute? · Wirtschaftsinformatik 10</small></div>
+    <button class="home" id="homeBtn" style="display:none">⟵ Startseite</button>
+  </div>
+</header>
+
+<main>
+<!-- START -->
+<section class="screen on" id="sStart">
+  <div class="hero">
+    <h2>Vom Klick bis zur Haustür</h2>
+    <p>50 Fragen rund um Lager, letzte Meile, IT, Nachhaltigkeit, Berufe und die Zukunft der Logistik. Lerne allein oder im Team – oder tritt im Duell gegen eine Mitspielerin oder einen Mitspieler an.</p>
+  </div>
+  <div class="modes">
+    <button class="mode" data-mode="learn">
+      <span class="tag">Einzeln oder Team</span>
+      <div class="ic">📦</div>
+      <h3>Lernmodus</h3>
+      <p>Frage oder Begriff lesen, Antwort überlegen oder im Team besprechen, Lösung aufdecken und selbst mit 0–3 Sternen bewerten. Am Ende siehst du, was du wiederholen solltest.</p>
+    </button>
+    <button class="mode" data-mode="duel">
+      <span class="tag">2 Spieler</span>
+      <div class="ic">🏁</div>
+      <h3>Wettbewerbsmodus</h3>
+      <p>Die Fragen gehen abwechselnd an Spieler 1 und Spieler 2. Nach dem Aufdecken der Lösung bewertet der Gegner die Antwort mit 0–3 Sternen. Wer am Ende mehr Sterne hat, gewinnt.</p>
+    </button>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section class="screen" id="sSetup">
+  <div class="panel">
+    <h2 id="setupTitle">Spiel einrichten</h2>
+    <p class="sub" id="setupSub"></p>
+
+    <div class="field">
+      <label id="nameLbl">Namen</label>
+      <div class="names" id="names"></div>
+    </div>
+
+    <div class="field">
+      <span class="lbl">Komplexitätsstufe</span>
+      <div class="levels">
+        <button class="level on" data-level="a"><b>🟢 Anfänger</b><span>Fachbegriffe und Grundfragen – kurze, klare Antworten.</span></button>
+        <button class="level" data-level="k"><b>🔴 Könner</b><span>Zusammenhänge erklären, begründen und bewerten.</span></button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="lbl" id="countLbl">Anzahl der Fragen</span>
+      <div class="seg" id="counts"></div>
+      <div class="hint" id="countHint"></div>
+    </div>
+
+    <div class="field">
+      <span class="lbl">Themenbereiche <button class="mini" id="allCats">alle</button><button class="mini" id="noCats">keine</button></span>
+      <div class="cats" id="cats"></div>
+    </div>
+
+    <div class="field">
+      <span class="lbl">So wird bewertet</span>
+      <div class="rubric">
+        <div><b>☆☆☆ 0</b>keine Antwort oder falsch</div>
+        <div><b>★☆☆ 1</b>ein richtiger Kernpunkt</div>
+        <div><b>★★☆ 2</b>mehrere Kernpunkte richtig</div>
+        <div><b>★★★ 3</b>vollständig, mit Fachbegriffen und Begründung</div>
+      </div>
+    </div>
+
+    <div class="go">
+      <button class="btn ghost" id="backBtn">Zurück</button>
+      <button class="btn primary" id="startBtn">Los geht's ▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- PLAY -->
+<section class="screen" id="sPlay">
+  <div class="bar">
+    <div class="prog">
+      <div class="txt"><span id="progTxt">Frage 1 von 10</span><span id="lvTxt"></span></div>
+      <div class="track"><i id="progBar"></i></div>
+    </div>
+  </div>
+  <div class="scores" id="scores"></div>
+
+  <div class="qcard">
+    <div class="qhead">
+      <span class="chip" id="qCat">A</span>
+      <span class="chip lv" id="qLv">Anfänger</span>
+      <span class="who" id="qWho"></span>
+    </div>
+    <div class="qbody">
+      <p class="term" id="qTerm"></p>
+      <p class="qtext" id="qText"></p>
+      <div class="sol" id="sol">
+        <h4>Musterlösung – darauf kommt es an</h4>
+        <ul id="solList"></ul>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn dark reveal" id="revealBtn">Lösung anzeigen</button>
+      <div class="rate" id="rate">
+        <p id="rateQ">Wie gut wurde die Frage beantwortet?</p>
+        <div class="stars" id="stars"></div>
+      </div>
+      <div class="keys"><kbd>Leertaste</kbd> Lösung anzeigen · <kbd>0</kbd>–<kbd>3</kbd> Sterne vergeben</div>
+    </div>
+  </div>
+</section>
+
+<!-- END -->
+<section class="screen" id="sEnd">
+  <div class="panel" id="endPanel"></div>
+</section>
+</main>
+
+<footer>Grundlage: Fragensammlung „Class Chat mit einem Logistik-Experten“ · Musterlösungen sind Erwartungshorizonte – sinnvolle andere Antworten zählen auch.</footer>
+
+<script>
+const KATEGORIEN = {
+  A: "Der Weg einer Bestellung",
+  B: "Tempo und die letzte Meile",
+  C: "Technik, IT und Daten",
+  D: "Störungen und Spitzenzeiten",
+  E: "Nachhaltigkeit",
+  F: "Mensch und Arbeit",
+  G: "Verantwortung von Logistikspezialisten",
+  H: "Aufgabenbereiche und Beruf",
+  I: "Zukunft der Logistik"
+};
+
+// a = Anfänger (Begriff/Grundfrage), k = Könner (Transfer-/Vertiefungsfrage)
+const FRAGEN = [
+// ---------- A ----------
+{c:"A",
+ a:{t:"Bestellabwicklung", q:"Was passiert direkt, nachdem jemand online auf „Kaufen“ geklickt hat?",
+    s:["Die Bestellung landet im Lagerverwaltungssystem (WMS); Zahlung und Verfügbarkeit werden geprüft.","Der Artikel wird im Bestand reserviert und ein Logistikzentrum ausgewählt.","Es entsteht ein Kommissionierauftrag: Ware holen → verpacken → etikettieren → verladen."]},
+ k:{q:"Beschreibe möglichst genau, was in einem Logistikzentrum in den ersten Minuten nach dem Klick auf „Jetzt kaufen“ passiert.",
+    s:["Bestellung geht ins Warehouse-Management-System (WMS); Bestand wird geprüft und reserviert.","Das System ordnet die Bestellung einem Standort und einem Versandzeitpunkt (Cut-off-Zeit des Lkw) zu.","Der Auftrag wird mit anderen zu einer Welle bzw. einem Batch gebündelt, damit Laufwege kurz bleiben.","Picker oder Roboter erhalten den Lagerplatz per Scanner/Display – niemand muss den Ort auswendig wissen.","Danach: Packen mit passender Kartongröße, Versandetikett, Sortierung nach Tour/Paketdienst, Verladen."]}},
+{c:"A",
+ a:{t:"Lagerverwaltungssystem (WMS)", q:"Was ist ein Lagerverwaltungssystem (WMS)?",
+    s:["Software, die für jeden Artikel speichert, wo er liegt und wie viel davon da ist.","Jede Warenbewegung wird per Barcode gescannt, dadurch ist der Bestand in Echtzeit aktuell."]},
+ k:{q:"Ein großes Logistikzentrum lagert Millionen von Artikeln. Wie behält man bei dieser Menge den Überblick?",
+    s:["Jeder Artikel und jeder Lagerplatz hat eine eindeutige Kennung (Barcode/Artikelnummer).","Jede Bewegung (Einlagern, Entnehmen, Umlagern) wird gescannt → Echtzeit-Bestand im WMS.","Menschen müssen Lagerorte nicht kennen: Das System führt sie zum richtigen Fach.","Laufende Kontrolle durch permanente Inventur bzw. Stichprobenzählungen; Abweichungen werden korrigiert.","Kennzahlen und Dashboards zeigen Bestände, Engpässe und Fehler auf einen Blick."]}},
+{c:"A",
+ a:{t:"Chaotische Lagerhaltung", q:"Was versteht man unter chaotischer Lagerhaltung?",
+    s:["Ware bekommt keinen festen Platz, sondern wird dort eingelagert, wo gerade Platz frei ist.","Der Platz wird im System gespeichert – ohne IT wäre die Ware nicht wiederzufinden.","Vorteil: bessere Ausnutzung der Lagerfläche, schnelleres Einlagern."]},
+ k:{q:"Trotz chaotischer Lagerhaltung brauchen manche Artikel einen festen Platz. Welche – und warum?",
+    s:["Sehr große oder schwere Waren (Sperrgut): spezielle Regale, Stapler, Bodenbelastung.","Gefahrstoffe wie Lithium-Akkus, Spraydosen, Chemikalien: getrennte Lagerung nach Brandschutz- und Gefahrstoffvorschriften.","Temperaturgeführte Ware (Lebensmittel, Medikamente): Kühl- bzw. Klimabereiche.","Besonders wertvolle Ware: gesicherte Zonen.","Häufig gilt eine Mischform: chaotisch innerhalb fester Zonen; Schnelldreher oft nahe an den Packstationen."]}},
+{c:"A",
+ a:{t:"Durchlaufzeit", q:"Was bedeutet der Begriff Durchlaufzeit im Lager?",
+    s:["Zeit, die ein Auftrag vom Bestelleingang bis zur Verladung in den Lkw braucht.","Ziel: möglichst kurz, damit Lieferversprechen eingehalten werden."]},
+ k:{q:"Wovon hängt ab, wie lange ein Artikel vom Regal bis in den Lkw braucht?",
+    s:["In modernen Zentren oft nur wenige Stunden; genaue Werte sind meist Betriebsgeheimnis.","Cut-off-Zeiten: Wann fährt der nächste Lkw in die gewünschte Region?","Wellen-/Batchplanung, Auslastung und Personalstärke der Schicht.","Automatisierungsgrad (Fördertechnik, Roboter, Sortieranlagen).","Engpässe entstehen oft beim Packen und Sortieren, nicht beim Greifen der Ware."]}},
+{c:"A",
+ a:{t:"Lagernetzwerk", q:"Warum betreiben große Versandhändler viele Lager statt nur eines?",
+    s:["Kürzere Wege zu den Kundinnen und Kunden → schnellere und günstigere Lieferung.","Bei Störungen kann ein anderes Lager einspringen."]},
+ k:{q:"Nach welchen Kriterien entscheidet ein System, aus welchem Logistikzentrum eine Bestellung verschickt wird?",
+    s:["Verfügbarkeit: Wo ist der Artikel vorrätig?","Lieferversprechen und Entfernung zur Lieferadresse.","Kosten: Transport, Möglichkeit, mehrere Artikel in einem Paket zu bündeln.","Auslastung der Standorte (freie Kapazität vs. Rückstau).","Ein Optimierungsalgorithmus wägt ab – manchmal kommt eine Bestellung deshalb in mehreren Paketen (Teillieferung)."]}},
+// ---------- B ----------
+{c:"B",
+ a:{t:"Same-Day-Delivery", q:"Was ist Same-Day-Delivery und was ist dafür nötig?",
+    s:["Zustellung noch am Tag der Bestellung.","Voraussetzung: Ware liegt in einem Lager nahe der Stadt und wird vor einer Annahmeschlusszeit bestellt."]},
+ k:{q:"Wie schaffen es Logistikunternehmen, dass Bestellungen am nächsten oder sogar am selben Tag ankommen?",
+    s:["Bestände liegen nah am Kunden (Verteilzentren in Ballungsräumen).","Prognosen sagen die Nachfrage voraus – Ware wird vorab richtig verteilt.","Schichtbetrieb rund um die Uhr und eng getaktete Cut-off-Zeiten.","Automatisierte Sortieranlagen und eigene Zustellnetze bzw. Verteilstationen.","Durchgängige IT: Jeder Prozessschritt ist geplant und wird überwacht."]}},
+{c:"B",
+ a:{t:"Letzte Meile", q:"Was versteht man unter der „letzten Meile“?",
+    s:["Letzter Transportabschnitt vom Verteilzentrum bis zur Haustür.","Gilt als teuerster und aufwendigster Teil der Lieferkette."]},
+ k:{q:"Warum gilt die letzte Meile oft als größere Herausforderung als das Lager?",
+    s:["Viele einzelne Stopps statt gebündelter Transporte → hohe Kosten pro Paket.","Unberechenbare Faktoren: Verkehr, Parkplatzsuche, Treppen, niemand zu Hause.","Fachkräftemangel bei Zustellerinnen und Zustellern.","Das Lager ist dagegen eine kontrollierte Umgebung, die sich gut automatisieren lässt.","Zusätzlich: Lärm, Emissionen und Lieferverkehr in den Innenstädten."]}},
+{c:"B",
+ a:{t:"Tourenplanung", q:"Was ist Tourenplanung?",
+    s:["Festlegen, welches Fahrzeug welche Adressen in welcher Reihenfolge anfährt.","Software berechnet möglichst kurze bzw. schnelle Routen."]},
+ k:{q:"Wie werden Zustellrouten geplant, wenn sich die Adressen jeden Tag ändern?",
+    s:["Täglich neue Berechnung per Optimierungsalgorithmus (Tourenplanungsproblem).","Berücksichtigt: Paketmenge, Fahrzeugkapazität, Zeitfenster, Arbeitszeiten, Verkehrsdaten.","Pakete werden in Stopp-Reihenfolge sortiert und ins Fahrzeug geladen.","Fahrerinnen und Fahrer werden per App navigiert; Routen können sich unterwegs anpassen.","Erfahrungswissen der Zusteller (Zufahrten, Hinterhöfe) ergänzt die Software."]}},
+{c:"B",
+ a:{t:"Zustellversuch", q:"Was passiert, wenn bei der Zustellung niemand zu Hause ist?",
+    s:["Abgabe beim Nachbarn, an einem vereinbarten Ablageort oder in einer Paketstation/-filiale.","Sonst: Benachrichtigung und erneuter Zustellversuch."]},
+ k:{q:"Welche Folgen hat ein gescheiterter Zustellversuch – und wie lässt er sich vermeiden?",
+    s:["Zusätzliche Fahrt, Arbeitszeit und CO₂-Ausstoß – der zweite Versuch ist reiner Mehraufwand.","Die Kosten trägt zunächst der Paketdienst, sie fließen aber in die Versandpreise ein.","Vermeidung: Ankündigung per App, Wunschzeitfenster, Abstellgenehmigung, Wunschnachbar.","Paketstationen und Paketshops bündeln viele Sendungen an einem Stopp."]}},
+{c:"B",
+ a:{t:"Lieferversprechen", q:"Was ist ein Lieferversprechen?",
+    s:["Der beim Kauf angezeigte Liefertermin.","Wird es nicht eingehalten, sinkt die Kundenzufriedenheit."]},
+ k:{q:"Wie haben sich die Erwartungen an Liefergeschwindigkeit verändert – und wie wichtig ist Tempo wirklich?",
+    s:["Mit dem Wachstum des Onlinehandels wurde Lieferung in 1–2 Tagen für viele zum Standard.","Schnelligkeit ist ein Wettbewerbsfaktor gegenüber anderen Händlern und dem Laden vor Ort.","Oft wichtiger als absolutes Tempo: Zuverlässigkeit und Sendungsverfolgung.","Zielkonflikt: sehr schnelle Lieferung kostet mehr und belastet die Umwelt.","Manche Kundinnen und Kunden wählen bewusst langsamere, gebündelte Lieferung."]}},
+// ---------- C ----------
+{c:"C",
+ a:{t:"Ausfallsicherheit der IT", q:"Warum ist ein IT-Ausfall für ein chaotisch organisiertes Lager besonders gefährlich?",
+    s:["Ohne Daten weiß niemand, wo welcher Artikel liegt.","Deshalb gibt es Backups, Ersatzsysteme und Notfallpläne."]},
+ k:{q:"Wie sichert sich ein Logistikzentrum gegen den Ausfall seines Computersystems ab?",
+    s:["Redundanz: gespiegelte Server bzw. mehrere Rechenzentren oder Cloud-Standorte.","Regelmäßige Datensicherungen (Backups) und Notstromversorgung.","Notfallpläne (Business Continuity) mit klaren Zuständigkeiten – und regelmäßige Übungen.","Schutz vor Cyberangriffen: Updates, Zugriffsrechte, Schulungen.","Für kurze Ausfälle teils manuelle Notprozesse, z. B. mit Listen."]}},
+{c:"C",
+ a:{t:"Ware-zur-Person-Prinzip", q:"Was bedeutet das Ware-zur-Person-Prinzip?",
+    s:["Roboter oder Fördertechnik bringen Regale bzw. Behälter zum Mitarbeiter.","Beschäftigte müssen nicht mehr durch das Lager laufen."]},
+ k:{q:"Welche Aufgaben übernehmen Roboter im Lager – und was können Menschen (noch) besser?",
+    s:["Roboter: Transport von Regalen und Behältern, Sortieren, Palettieren, teils Verpacken standardisierter Artikel.","Menschen: Greifen sehr unterschiedlicher, empfindlicher oder unförmiger Artikel (Fingerspitzengefühl).","Menschen: Qualitätskontrolle, Erkennen von Ausnahmen und Lösen unerwarteter Probleme.","Menschen: Flexibilität bei Störungen, Zusammenarbeit, Verbesserungsvorschläge."]}},
+{c:"C",
+ a:{t:"Nachfrageprognose", q:"Was ist eine Nachfrageprognose?",
+    s:["Vorhersage, wie viel von einem Artikel künftig bestellt wird.","Grundlage für Einkauf, Lagerbestand und Personalplanung."]},
+ k:{q:"Wofür wird künstliche Intelligenz in der Logistik eingesetzt?",
+    s:["Nachfrageprognosen auf Basis von Verkaufsdaten, Saison, Wetter, Trends.","Bestandsoptimierung: Welche Ware liegt in welchem Lager?","Routen- und Tourenoptimierung.","Personal- und Schichtplanung.","Bilderkennung, z. B. zum Erkennen von Schäden oder Paketmaßen.","Grenze: Prognosen bleiben unsicher, bei Ausnahmesituationen (z. B. Pandemie) liegen sie oft daneben."]}},
+{c:"C",
+ a:{t:"Sendungsverfolgung (Tracking)", q:"Wie funktioniert Sendungsverfolgung?",
+    s:["Jedes Paket hat eine Sendungsnummer/Barcode.","Jeder Scan erzeugt eine Statusmeldung, die Kunden online einsehen können."]},
+ k:{q:"Welche Daten werden über ein Paket gesammelt, und wie werden die Daten der Kundinnen und Kunden geschützt?",
+    s:["Daten: Sendungsnummer, Adresse, Gewicht/Maße, Zeit und Ort jedes Scans, Zustellnachweis.","Datenschutz-Grundverordnung (DSGVO): Datenminimierung und Zweckbindung.","Zugriffsrechte: Nur wer die Daten für seine Aufgabe braucht, sieht sie.","Technischer Schutz: Verschlüsselung, Protokollierung, Löschfristen."]}},
+{c:"C",
+ a:{t:"Automatisierung", q:"Was versteht man unter Automatisierung in der Logistik?",
+    s:["Maschinen und Software übernehmen Aufgaben, die vorher Menschen erledigt haben.","Beispiele: Sortieranlagen, Förderbänder, Lagerroboter, automatische Routenplanung."]},
+ k:{q:"Welche Tätigkeiten werden durch Roboter und KI in den nächsten Jahren wegfallen – und welche entstehen neu?",
+    s:["Rückläufig: einfache, sich wiederholende Tätigkeiten (Laufwege, Sortieren, manuelle Dateneingabe).","Neu bzw. wachsend: Wartung und Instandhaltung der Anlagen (Mechatronik).","Neu: Steuerung und Überwachung von Robotern, Datenanalyse, IT-Sicherheit, Prozessoptimierung.","Weiterbildung wird wichtiger; viele Berufe verändern sich eher, als dass sie ganz verschwinden.","Wie stark Jobs insgesamt wegfallen, ist umstritten – gute Antworten nennen beide Seiten."]}},
+// ---------- D ----------
+{c:"D",
+ a:{t:"Peak (Spitzenzeit)", q:"Was ist ein „Peak“ in der Logistik? Nenne Beispiele.",
+    s:["Zeitraum mit stark erhöhtem Bestellaufkommen.","Beispiele: Black Friday, Cyber Monday, Weihnachtsgeschäft."]},
+ k:{q:"Wie bereitet sich ein Logistikzentrum auf Spitzenzeiten wie Black Friday oder Weihnachten vor?",
+    s:["Prognosen schon Monate vorher; Planung von Personal, Fläche und Transport.","Saisonkräfte einstellen und einarbeiten, Zusatzschichten planen.","Bestände frühzeitig aufbauen und im Netzwerk verteilen.","Transportkapazitäten bei Speditionen und Paketdiensten sichern.","Wartung vorher erledigen; in der Peak-Zeit möglichst keine IT-Änderungen."]}},
+{c:"D",
+ a:{t:"Störung im Betriebsablauf", q:"Nenne Beispiele für Störungen in einem Logistikzentrum.",
+    s:["Ausfall von Fördertechnik oder IT, Stromausfall.","Verspätete Lieferanten, Personalausfall, Unwetter, Brand."]},
+ k:{q:"Wie sollte ein Unternehmen bei einer großen Störung systematisch vorgehen? Nenne auch ein reales Beispiel.",
+    s:["Lage erfassen und Auswirkungen bewerten.","Priorisieren (z. B. dringende Sendungen zuerst), Ausweichlager oder -routen nutzen.","Kundinnen und Kunden sowie Partner frühzeitig informieren.","Nach der Störung: Ursachenanalyse und Verbesserungen („Lessons Learned“).","Beispiel: Blockade des Suezkanals durch das Containerschiff Ever Given (2021) – weltweite Lieferverzögerungen."]}},
+{c:"D",
+ a:{t:"Sicherheitsbestand", q:"Was ist ein Sicherheitsbestand?",
+    s:["Zusätzlicher Vorrat, der Lieferverzögerungen oder unerwartet hohe Nachfrage abfedert.","Kostet Lagerplatz und Kapital, erhöht aber die Lieferfähigkeit."]},
+ k:{q:"Wie reagiert man, wenn ein Lieferant nicht pünktlich liefert oder ein Artikel plötzlich ausverkauft ist?",
+    s:["Sicherheitsbestände nutzen; Ware aus anderen Lagern umverteilen.","Mehrere Lieferanten für wichtige Artikel (Multiple Sourcing).","Kunden informieren, Liefertermin anpassen, Alternativprodukte anbieten.","Lieferanten bewerten, ggf. Vertragsstrafen; Ursachen klären."]}},
+{c:"D",
+ a:{t:"Risikomanagement", q:"Was versteht man unter Risikomanagement?",
+    s:["Risiken erkennen, bewerten und vorab Gegenmaßnahmen planen.","Beispiel Logistik: Ausweichrouten für den Fall von Staus oder Streiks."]},
+ k:{q:"Welche Auswirkungen haben Unwetter, Streiks oder Staus auf die Planung – und wie geht man damit um?",
+    s:["Folgen: Verspätungen, verpasste Anschlüsse, volle Lager, unzufriedene Kunden.","Echtzeit-Verkehrsdaten und dynamische Umplanung von Routen.","Zeitpuffer und alternative Verkehrsträger (Schiene, Luft).","Mehrere Standorte, damit Ausfälle ausgeglichen werden können.","Sicherheit der Fahrerinnen und Fahrer hat Vorrang vor Termintreue."]}},
+{c:"D",
+ a:{t:"Lieferkette (Supply Chain)", q:"Was ist eine Lieferkette?",
+    s:["Der gesamte Weg eines Produkts: Rohstoff → Hersteller → Händler → Kunde.","Logistik verbindet die einzelnen Glieder dieser Kette."]},
+ k:{q:"Was hat die Logistik aus Krisen wie der Corona-Pandemie gelernt?",
+    s:["Reine Just-in-time-Belieferung ist anfällig → wieder mehr Sicherheitsbestände („Just-in-case“).","Lieferanten und Regionen streuen, teils Produktion näher an Europa holen (Nearshoring).","Mehr Transparenz in der Lieferkette durch digitale Werkzeuge.","Logistik wurde als systemrelevant wahrgenommen.","Gesundheitsschutz und flexible Arbeitsorganisation wurden wichtiger."]}},
+// ---------- E ----------
+{c:"E",
+ a:{t:"Verpackungsoptimierung", q:"Was bringt es, die passende Kartongröße zu wählen?",
+    s:["Weniger Luft und Füllmaterial im Paket.","Mehr Pakete passen in einen Lkw → weniger Fahrten, weniger CO₂."]},
+ k:{q:"Wie wird entschieden, welche Kartongröße ein Paket bekommt, und welche Vorteile bringt das?",
+    s:["Maße und Gewicht jedes Artikels sind im System gespeichert.","Software schlägt die passende Verpackung vor; teils schneiden Maschinen den Karton nach Maß.","Für unempfindliche Ware: Versandtaschen statt Kartons.","Vorteile: weniger Material, geringere Transportkosten, bessere Auslastung, weniger CO₂."]}},
+{c:"E",
+ a:{t:"Retoure", q:"Was ist eine Retoure?",
+    s:["Rücksendung einer Ware an den Händler.","Im Onlinehandel haben Verbraucher meist ein 14-tägiges Widerrufsrecht."]},
+ k:{q:"Was passiert mit Rücksendungen – und warum sind sie ein Problem?",
+    s:["Prüfung: Ist die Ware neuwertig, beschädigt oder unvollständig?","Neuwertig → zurück in den Bestand; leichte Mängel → B-Ware/Restposten.","Weitere Wege: Aufbereitung, Spende, Recycling – Vernichtung nur als letzte Möglichkeit (Obhutspflicht im Kreislaufwirtschaftsgesetz).","Problem: zusätzliche Transporte, Arbeit, Kosten und CO₂.","Vermeidung: bessere Produktinfos, Größenberatung, Bewertungen."]}},
+{c:"E",
+ a:{t:"Lastenrad / E-Transporter", q:"Warum setzen Paketdienste in Städten Lastenräder und E-Transporter ein?",
+    s:["Lokal keine Abgase, leiser.","Lastenräder kommen in engen Innenstädten und Fußgängerzonen gut voran."]},
+ k:{q:"Mit welchen Maßnahmen lässt sich der CO₂-Ausstoß im Transport verringern?",
+    s:["Elektrotransporter und Lastenräder, kombiniert mit Mikro-Depots in der Stadt.","Routenoptimierung und hohe Auslastung der Fahrzeuge.","Verlagerung langer Strecken auf die Schiene.","Alternative Antriebe im Lkw-Verkehr (E-Lkw, Wasserstoff, erneuerbare Kraftstoffe).","Ökostrom und Photovoltaik auf Lagerdächern."]}},
+{c:"E",
+ a:{t:"Zielkonflikt", q:"Was ist ein Zielkonflikt? Nenne ein Beispiel aus der Logistik.",
+    s:["Zwei Ziele behindern sich gegenseitig: Wird das eine besser erreicht, leidet das andere.","Beispiel: schnelle Lieferung vs. Klimaschutz."]},
+ k:{q:"Passen schnelle Lieferung und Klimaschutz zusammen? Begründe.",
+    s:["Konflikt: Expresslieferung heißt oft halbleere Fahrzeuge, wenig Bündelung, teils Luftfracht.","Aber: Lager nahe am Kunden verkürzen Wege; E-Fahrzeuge senken Emissionen.","Lösungen: feste Liefertage, Bündelung, Paketstationen, „grüne“ Versandoptionen.","Fazit: nur teilweise vereinbar – es bleibt eine Abwägung, die auch Kunden beeinflussen."]}},
+{c:"E",
+ a:{t:"Nachhaltiges Bestellen", q:"Nenne zwei Dinge, die du als Kunde für umweltfreundlichere Lieferungen tun kannst.",
+    s:["Bestellungen bündeln, unnötige Retouren vermeiden.","Paketstation nutzen oder Ablageort angeben."]},
+ k:{q:"Was können Kundinnen und Kunden selbst tun, damit Bestellungen umweltfreundlicher ankommen?",
+    s:["Mehrere Artikel in einer Bestellung bündeln; langsamere Versandoption wählen.","Retouren vermeiden: Maße prüfen, keine Auswahlbestellungen in mehreren Größen.","Paketstation, Paketshop oder Abstellort → keine zweiten Zustellversuche.","Lokal einkaufen, wenn möglich; Verpackung richtig recyceln."]}},
+// ---------- F ----------
+{c:"F",
+ a:{t:"Operativer Bereich", q:"Welche Tätigkeiten gehören zum operativen Bereich eines Lagers?",
+    s:["Arbeit direkt an der Ware: Entladen, Einlagern, Kommissionieren, Packen, Verladen."]},
+ k:{q:"Beschreibe die operativen Tätigkeiten vom Wareneingang bis zum Warenausgang. Welche sind körperlich am anspruchsvollsten?",
+    s:["Wareneingang: Entladen, Prüfen, Erfassen → Einlagern → Kommissionieren → Packen → Verladen.","Besonders anspruchsvoll: Entladen loser Ware aus Containern (viel Heben), schwere Artikel.","Belastungen: langes Stehen, lange Laufwege, wiederholte Bewegungen, Schichtarbeit.","Entlastung: Hebehilfen, Förderbänder, Ware-zur-Person-Systeme, ergonomische Arbeitsplätze."]}},
+{c:"F",
+ a:{t:"Arbeitsvorbereitung", q:"Welche Aufgabe hat die Arbeitsvorbereitung?",
+    s:["Sie plant Schichten, Personaleinsatz und die Reihenfolge der Aufträge – bevor die Ware bewegt wird."]},
+ k:{q:"Wie sieht ein typischer Arbeitstag in der Arbeitsvorbereitung eines Logistikzentrums aus?",
+    s:["Auswerten von Prognosen und aktuellem Auftragseingang.","Schichtplanung und Zuteilung der Beschäftigten zu Stationen.","Bildung von Auftragswellen passend zu den Cut-off-Zeiten der Lkw.","Überwachen von Kennzahlen (Leistung, Rückstände, Fehlerquote) über Dashboards.","Kurzfristiges Umsteuern bei Krankheit, Anlagenstörung oder Auftragsspitzen."]}},
+{c:"F",
+ a:{t:"Inventur", q:"Was ist eine Inventur?",
+    s:["Bestandsaufnahme: Die tatsächlich vorhandene Ware wird gezählt.","Abgleich mit den Daten im System; Abweichungen werden korrigiert."]},
+ k:{q:"Welche Aufgaben werden im administrativen Bereich eines Logistikzentrums erledigt?",
+    s:["Bestandskontrolle und Inventur (oft als permanente Inventur bzw. Stichprobeninventur).","Bearbeitung von Reklamationen und Schadensfällen.","Versand- und Zollpapiere erstellen und prüfen.","Abrechnung mit Transportpartnern (Frachtrechnungen prüfen).","Personalverwaltung, Einkauf, Controlling."]}},
+{c:"F",
+ a:{t:"Job-Rotation", q:"Was bedeutet Job-Rotation?",
+    s:["Beschäftigte wechseln regelmäßig zwischen verschiedenen Tätigkeiten.","Ziel: weniger Eintönigkeit und einseitige Belastung."]},
+ k:{q:"Wie kann man verhindern, dass die Arbeit an Pick- und Packstationen zu eintönig oder zu anstrengend wird?",
+    s:["Job-Rotation zwischen Stationen und Tätigkeiten.","Ergonomie: höhenverstellbare Tische, Anti-Ermüdungsmatten, Hebehilfen.","Pausenregelungen und Gefährdungsbeurteilung nach Arbeitsschutzgesetz.","Weiterbildung und Aufstiegsmöglichkeiten bieten Perspektive."]}},
+{c:"F",
+ a:{t:"Leistungsdaten / Überwachung", q:"Warum ist das Scannen jedes Griffs umstritten?",
+    s:["Scans sind für Bestand und Qualität nötig.","Gleichzeitig kann daraus Tempo und Leistung einzelner Personen abgelesen werden → Gefühl der Überwachung."]},
+ k:{q:"Wie lässt sich verhindern, dass Scan-Daten Beschäftigte unter Druck setzen oder überwachen?",
+    s:["Datenschutzregeln (DSGVO, Beschäftigtendatenschutz): klare Zwecke, begrenzte Speicherung.","Betriebsrat bestimmt mit bei technischen Einrichtungen, die Leistung überwachen können (§ 87 BetrVG).","Auswertung anonymisiert oder auf Teamebene statt Einzelpersonen.","Transparenz: Beschäftigte wissen, welche Daten wofür genutzt werden.","Das Spannungsfeld Effizienz vs. Persönlichkeitsrechte wird öffentlich diskutiert."]}},
+// ---------- G ----------
+{c:"G",
+ a:{t:"Arbeitssicherheit", q:"Nenne zwei Maßnahmen für Arbeitssicherheit im Lager.",
+    s:["Sicherheitsschuhe und Warnwesten (persönliche Schutzausrüstung).","Getrennte Wege für Fußgänger und Gabelstapler; regelmäßige Unterweisungen."]},
+ k:{q:"Welche Verantwortung tragen Logistikverantwortliche für die Sicherheit der Beschäftigten?",
+    s:["Gesetzliche Pflicht des Arbeitgebers (Arbeitsschutzgesetz): Gefährdungsbeurteilung erstellen.","Unterweisungen, Schutzausrüstung, sichere Verkehrswege, Wartung der Anlagen.","Unfälle und Beinahe-Unfälle auswerten und daraus lernen.","Sicherheitskultur vorleben: Sicherheit vor Tempo."]}},
+{c:"G",
+ a:{t:"Transportschaden", q:"Was ist ein Transportschaden?",
+    s:["Beschädigung oder Verlust einer Sendung auf dem Transportweg.","Vorbeugung durch gute Verpackung und sorgfältigen Umgang."]},
+ k:{q:"Wer trägt die Verantwortung, wenn ein Paket beschädigt wird oder verloren geht, und wie beugt man vor?",
+    s:["Beim Kauf durch Verbraucher trägt der Händler das Risiko, bis die Ware übergeben ist.","Der Händler kann sich an den Transportdienstleister halten (Frachtrecht im HGB).","Vorbeugung: passende Verpackung und Polsterung, „Vorsicht zerbrechlich“-Kennzeichnung.","Scans an jedem Übergabepunkt zeigen, wo ein Schaden entstanden ist.","Sorgfältige Sortierung und Verladung, Schulung des Personals."]}},
+{c:"G",
+ a:{t:"Mensch und System", q:"Nenne eine Entscheidung, die das Computersystem trifft, und eine, die ein Mensch trifft.",
+    s:["System: Lagerplatz, Pickreihenfolge, Route.","Mensch: Reaktion auf Ausnahmen/Störungen, strategische Entscheidungen."]},
+ k:{q:"Welche Entscheidungen überlässt man dem Computersystem – und wann muss ein Mensch eingreifen?",
+    s:["System: Routineentscheidungen wie Lagerplätze, Pickreihenfolgen, Touren, Bestellvorschläge.","Mensch: Ausnahmen und Störungen, wenn Vorschläge unplausibel sind.","Mensch: strategische Entscheidungen (neuer Standort, Investitionen), Personalfragen.","Die Verantwortung bleibt beim Menschen („Human in the Loop“)."]}},
+{c:"G",
+ a:{t:"Gefahrgut", q:"Was ist Gefahrgut? Nenne ein Beispiel.",
+    s:["Stoffe, die beim Transport eine Gefahr für Menschen oder Umwelt darstellen können.","Beispiel: Lithium-Akkus, Spraydosen, Farben, Chemikalien."]},
+ k:{q:"Wie geht man in der Logistik mit Lebensmitteln, Medikamenten oder Lithium-Akkus um?",
+    s:["Lebensmittel: Kühlkette einhalten, Hygiene, Haltbarkeit beachten (was zuerst abläuft, geht zuerst raus).","Medikamente: strenge Vorgaben für den Vertrieb, lückenlose Temperaturüberwachung.","Lithium-Akkus: Gefahrgutvorschriften (z. B. ADR auf der Straße), Brandschutz, getrennte Lagerung, Kennzeichnung.","Speziell geschultes Personal und Dokumentation."]}},
+{c:"G",
+ a:{t:"Lieferkettengesetz", q:"Worum geht es beim Lieferkettengesetz?",
+    s:["Große Unternehmen sollen darauf achten, dass bei ihren Lieferanten Menschenrechte und Umweltstandards eingehalten werden."]},
+ k:{q:"Wie kann ein Unternehmen sicherstellen, dass Transportpartner und Lieferanten faire Arbeitsbedingungen und Umweltstandards einhalten?",
+    s:["Verhaltenskodex (Code of Conduct) als Vertragsbestandteil.","Audits und Kontrollen vor Ort, Zertifikate.","Beschwerdemöglichkeiten für Betroffene.","Konsequenzen bis zur Beendigung der Zusammenarbeit.","Gesetzliche Sorgfaltspflichten (deutsches Lieferkettengesetz bzw. EU-Regeln); bei Paketdiensten haftet der Auftraggeber auch für Sozialbeiträge von Subunternehmern."]}},
+// ---------- H ----------
+{c:"H",
+ a:{t:"Aufgabenbereiche", q:"Nenne die drei großen Aufgabenbereiche in einem Logistikzentrum.",
+    s:["Operativ: direkt an der Ware.","Planend/steuernd: Arbeitsvorbereitung, Disposition.","Administrativ/technisch: Verwaltung, Technik, IT."]},
+ k:{q:"Wie sind die Aufgaben in einem Logistikzentrum verteilt, und warum müssen die Bereiche eng zusammenarbeiten?",
+    s:["Operativ: Wareneingang, Lager, Kommissionierung, Packen, Versand.","Dispositiv: Planung und Steuerung der Abläufe, Leitstand, Personaleinsatz.","Administrativ: Verwaltung, Personal, Buchhaltung, Zoll.","Technik und IT: Instandhaltung der Fördertechnik, Systeme, Datenanalyse.","Zusammenarbeit: Fehler oder Störungen in einem Bereich wirken sofort auf alle anderen."]}},
+{c:"H",
+ a:{t:"Fachkraft für Lagerlogistik", q:"Was macht eine Fachkraft für Lagerlogistik?",
+    s:["Dreijähriger Ausbildungsberuf.","Waren annehmen, prüfen, lagern, kommissionieren, verpacken und versenden; Bestände kontrollieren."]},
+ k:{q:"Welche Berufe trifft man in einem modernen Logistikzentrum? Nenne mindestens vier mit ihren Aufgaben.",
+    s:["Fachkraft für Lagerlogistik / Fachlagerist: Warenfluss im Lager.","Mechatroniker/in: Wartung von Förder- und Sortiertechnik.","Kaufleute für Spedition und Logistikdienstleistung: Transporte organisieren, Abrechnung.","Berufskraftfahrer/in: Transport.","Fachinformatiker/in, Data Analysts: Systeme betreuen, Daten auswerten.","Studierte Fachkräfte: Logistik, Wirtschaftsinformatik, Wirtschaftsingenieurwesen."]}},
+{c:"H",
+ a:{t:"Schlüsselkompetenzen", q:"Nenne drei Fähigkeiten, die man in der Logistik braucht.",
+    s:["z. B. Sorgfalt, Zuverlässigkeit, Teamfähigkeit, Zahlenverständnis, Organisationstalent."]},
+ k:{q:"Welche Fähigkeiten braucht man im operativen Bereich, welche in Planung und Steuerung – und was davon lernst du schon in der Schule?",
+    s:["Operativ: Sorgfalt, körperliche Belastbarkeit, Sicherheitsbewusstsein, Teamarbeit.","Planung/Steuerung: analytisches Denken, Problemlösen, Kommunikation, Umgang mit Daten.","Schule: Mathematik (Prozent, Statistik), Wirtschaftsinformatik (Tabellenkalkulation, Datenbanken, Prozessmodelle).","Außerdem: Englisch, Präsentieren, Arbeiten im Team."]}},
+{c:"H",
+ a:{t:"Duales Studium", q:"Was ist ein duales Studium?",
+    s:["Kombination aus Studium an einer Hochschule und Praxisphasen in einem Unternehmen.","Meist mit Vergütung durch das Unternehmen."]},
+ k:{q:"Welche Wege führen in die Logistik? Vergleiche Ausbildung und Studium.",
+    s:["Ausbildung: z. B. Fachkraft für Lagerlogistik, Kaufleute für Spedition und Logistikdienstleistung.","Aufstieg nach der Ausbildung: Fachwirt/in oder Meister/in Logistik.","Duales Studium: Theorie und Praxis verbunden.","Studium: Logistik, BWL, Wirtschaftsinformatik, Wirtschaftsingenieurwesen.","Praktika und Ferienjobs helfen bei der Orientierung."]}},
+{c:"H",
+ a:{t:"Die 7 R der Logistik", q:"Was besagen die „7 R“ der Logistik?",
+    s:["Die richtige Ware, in der richtigen Menge, im richtigen Zustand, am richtigen Ort, zur richtigen Zeit, zu den richtigen Kosten, für den richtigen Kunden."]},
+ k:{q:"Was macht Berufe in der Logistik attraktiv – und was sind die größten Herausforderungen?",
+    s:["Attraktiv: abwechslungsreich, Ergebnisse sofort sichtbar, viel Technik, wachsende Branche, international.","Gute Aufstiegs- und Weiterbildungschancen.","Herausfordernd: Schichtarbeit, Zeitdruck, Spitzenzeiten, hohe Verantwortung.","Ständiger Wandel durch neue Technik erfordert lebenslanges Lernen."]}},
+// ---------- I ----------
+{c:"I",
+ a:{t:"Blockchain", q:"Was ist eine Blockchain?",
+    s:["Dezentrale Datenbank, deren Einträge in Blöcken miteinander verkettet sind.","Nachträgliche Änderungen sind praktisch nicht möglich → fälschungssicher."]},
+ k:{q:"Wo kann eine Blockchain in der Logistik nützen – und wo liegen die Grenzen?",
+    s:["Fälschungssichere Dokumentation jeder Übergabe einer Lieferung.","Herkunftsnachweise, z. B. bei Lebensmitteln oder Medikamenten.","Viele Beteiligte teilen eine gemeinsame Datenbasis ohne zentrale Stelle.","Grenzen: Die Daten sind nur so gut wie die Eingabe; fehlende Standards; hoher Abstimmungsaufwand.","Bisher viele Pilotprojekte, breiter Einsatz noch begrenzt (z. B. wurde die Plattform TradeLens wieder eingestellt)."]}},
+{c:"I",
+ a:{t:"Smart Contract", q:"Was ist ein Smart Contract?",
+    s:["Ein Programm, das automatisch eine Aktion ausführt, sobald eine Bedingung erfüllt ist.","Beispiel: Zahlung wird ausgelöst, wenn die Lieferung als angekommen gescannt wird."]},
+ k:{q:"Können Smart Contracts Lieferscheine und Zollpapiere bald überflüssig machen? Wäge ab.",
+    s:["Chancen: automatische Zahlung, weniger Papier, schnellere Abwicklung, weniger Fehler.","Voraussetzungen: rechtliche Anerkennung, gemeinsame Standards, Mitwirkung von Behörden (Zoll).","Problem: Das Programm muss sich auf korrekte Daten von außen verlassen (Sensoren, Scans).","Realistischer kurzfristig: schrittweise Digitalisierung (elektronische Frachtpapiere) statt kompletter Ersatz."]}},
+{c:"I",
+ a:{t:"Drohnenzustellung", q:"Welche Vorteile hätte die Zustellung per Drohne?",
+    s:["Schnell, unabhängig von Staus, gut für abgelegene Orte.","Elektrisch betrieben."]},
+ k:{q:"Was spricht im Moment noch gegen regelmäßige Paketlieferungen per Drohne in Deutschland?",
+    s:["Technik: begrenzte Reichweite und Nutzlast, Wetterabhängigkeit, Akkus.","Recht: strenge EU-Drohnenregeln, Flüge außer Sichtweite brauchen Genehmigung, Überflug von Wohngebieten.","Akzeptanz: Lärm, Privatsphäre, Sorge vor Abstürzen.","Bisher vor allem Pilotprojekte (z. B. Medikamente, Laborproben, Inseln) – ein Zeitpunkt für den Regelbetrieb ist offen."]}},
+{c:"I",
+ a:{t:"Haftung", q:"Was bedeutet Haftung?",
+    s:["Die Pflicht, für einen verursachten Schaden einzustehen und ihn zu ersetzen."]},
+ k:{q:"Wer trägt die Verantwortung, wenn eine Lieferdrohne abstürzt – und wie lässt sich der Datenschutz wahren?",
+    s:["Grundsätzlich haftet der Betreiber der Drohne, auch ohne Verschulden (Luftverkehrsrecht); Versicherungspflicht.","Bei technischen Mängeln ggf. der Hersteller (Produkthaftung).","Datenschutz: Kameras nur zur Navigation, keine Speicherung oder Verpixelung, DSGVO beachten.","Flugrouten möglichst nicht über Privatgrundstücke; Registrierungs- und Kennzeichnungspflicht."]}},
+{c:"I",
+ a:{t:"Paketstation", q:"Was ist der Vorteil einer Paketstation?",
+    s:["Pakete können rund um die Uhr abgeholt werden.","Viele Sendungen an einem Ort → weniger Stopps und keine gescheiterten Zustellversuche."]},
+ k:{q:"Werden Lieferroboter auf dem Gehweg oder Paketstationen die Zustellerinnen und Zusteller irgendwann ersetzen?",
+    s:["Paketstationen wachsen stark und bündeln die letzte Meile.","Lieferroboter: bisher Tests; Probleme mit Bordsteinen, Treppen, Vandalismus, Gehweg-Konflikten und Zulassung.","Eher Ergänzung als Ersatz – große und schwere Sendungen, Service und Sonderfälle brauchen Menschen.","Fachkräftemangel macht Automatisierung für Unternehmen attraktiv."]}},
+{c:"I",
+ a:{t:"Platooning", q:"Was ist Platooning?",
+    s:["Mehrere Lkw fahren elektronisch gekoppelt in sehr kurzem Abstand hintereinander.","Ziel: Kraftstoff sparen durch Windschatten, mehr Sicherheit."]},
+ k:{q:"Wann sind selbstfahrende Lkw oder Platooning auf deutschen Autobahnen Alltag? Was spricht dafür, was dagegen?",
+    s:["Deutschland erlaubt seit 2021 autonomes Fahren (Stufe 4) in festgelegten Bereichen mit technischer Aufsicht.","Platooning-Test auf der A9 (2018/19): Ersparnis geringer als erhofft, Fahrer fanden die Abstände belastend.","Dafür: Fahrermangel, Effizienz, Sicherheit; dagegen: Haftung, Technik, Infrastruktur, Akzeptanz.","Erste Hub-zu-Hub-Tests laufen; Regelbetrieb ist noch offen – eine begründete Einschätzung zählt."]}},
+{c:"I",
+ a:{t:"Vorausschauender Versand", q:"Was bedeutet vorausschauender Versand (Anticipatory Shipping)?",
+    s:["Ware wird schon in die Nähe der Kunden geschickt, bevor sie bestellt wurde.","Grundlage: KI-Prognose des Kaufverhaltens."]},
+ k:{q:"Ist es sinnvoll, Waren in ein Lager in deiner Nähe zu schicken, bevor du sie bestellt hast? Bewerte.",
+    s:["Idee wurde bereits 2013 von Amazon zum Patent angemeldet bzw. erteilt.","Pro: sehr kurze Lieferzeiten, gleichmäßigere Auslastung.","Contra: Fehlprognosen → Rücktransporte, Kosten, unnötige Fahrten.","Datenschutz: Erfordert detaillierte Auswertung des Kaufverhaltens.","In der Praxis meist regional (Bestände ins regionale Lager), nicht für einzelne Personen."]}},
+{c:"I",
+ a:{t:"Digitaler Zwilling", q:"Was ist ein digitaler Zwilling?",
+    s:["Virtuelles Abbild eines realen Systems, z. B. eines Logistikzentrums.","Damit lassen sich Abläufe am Computer testen, bevor sie real umgesetzt werden."]},
+ k:{q:"Wozu nutzt man einen digitalen Zwilling eines Logistikzentrums?",
+    s:["Simulation neuer Layouts, Abläufe oder Peak-Szenarien – ohne Risiko für den laufenden Betrieb.","Mit Echtzeitdaten (Sensoren): Überwachung und frühzeitiges Erkennen von Engpässen.","Vorausschauende Wartung: Verschleiß erkennen, bevor eine Anlage ausfällt.","Grenzen: hoher Aufwand, Ergebnisse nur so gut wie die Daten."]}},
+{c:"I",
+ a:{t:"Vollautomatisches Lager", q:"Was ist ein vollautomatisches Lager („Dark Warehouse“)?",
+    s:["Lager, das weitgehend ohne Menschen arbeitet – „das Licht kann ausbleiben“.","Teilbereiche wie Hochregallager sind heute schon vollautomatisch."]},
+ k:{q:"Wird es Logistikzentren ganz ohne Menschen geben? Welche Aufgaben bleiben beim Menschen?",
+    s:["Bei einheitlicher Ware (Paletten, Kisten) ist Vollautomatisierung schon weit fortgeschritten.","Bei sehr vielfältigem Sortiment bleibt das Greifen schwierig.","Bei Menschen bleiben: Wartung und Störungsbehebung, Überwachung, Planung, Umgang mit Ausnahmen.","Außerdem: Weiterentwicklung der Systeme, Verantwortung und ethische Entscheidungen, Kundenkontakt."]}},
+{c:"I",
+ a:{t:"Zukunftstechnologien", q:"Nenne drei Zukunftstechnologien, die die Logistik verändern.",
+    s:["z. B. künstliche Intelligenz, Robotik, autonome Fahrzeuge, Drohnen, digitale Zwillinge, Blockchain."]},
+ k:{q:"Wie könnte ein Paket im Jahr 2040 zu dir nach Hause kommen? Welche Technologie wird die Logistik am stärksten verändern?",
+    s:["Szenario: KI-Prognose → Ware liegt schon regional → automatisches Lager → autonomer E-Lkw → Mikro-Depot → Roboter, Drohne oder Paketstation.","Alles in Echtzeit verfolgbar, weitgehend emissionsfrei.","Häufig genannt: KI, weil sie alle anderen Bereiche verknüpft und steuert.","Offene Frage – bewertet wird eine schlüssige Begründung."]}}
+];
+
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const starStr = n => '★'.repeat(n) + '<span class="e">' + '☆'.repeat(3-n) + '</span>';
+
+const RATE_LABELS = ["keine / falsche Antwort","ein Kernpunkt","mehrere Kernpunkte","vollständig & begründet"];
+const COUNTS = { learn:[5,10,15,20,30,50], duel:[3,5,8,10,15,25] };
+
+const cfg = { mode:"learn", level:"a", count:10, cats:new Set(Object.keys(KATEGORIEN)), names:["",""] };
+let game = null;
+
+function show(id){
+  $$(".screen").forEach(s=>s.classList.remove("on"));
+  $(id).classList.add("on");
+  $("#homeBtn").style.display = id==="#sStart" ? "none" : "";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+/* ---------- Setup ---------- */
+function pool(){ return FRAGEN.map((f,i)=>i).filter(i=>cfg.cats.has(FRAGEN[i].c)); }
+
+function renderSetup(){
+  const duel = cfg.mode==="duel";
+  $("#setupTitle").textContent = duel ? "Wettbewerb einrichten" : "Lernrunde einrichten";
+  $("#setupSub").textContent = duel
+    ? "Die Fragen werden abwechselnd gestellt – Spieler 1 beginnt. Der jeweils andere Spieler bewertet die Antwort."
+    : "Allein oder im Team: Antwort überlegen bzw. besprechen, Lösung aufdecken, ehrlich bewerten.";
+  $("#nameLbl").textContent = duel ? "Spielerinnen und Spieler" : "Name oder Teamname (optional)";
+  $("#names").innerHTML = duel
+    ? `<div class="p1"><input id="n1" maxlength="20" placeholder="Spieler 1" value="${esc(cfg.names[0])}"></div>
+       <div class="p2"><input id="n2" maxlength="20" placeholder="Spieler 2" value="${esc(cfg.names[1])}"></div>`
+    : `<div><input id="n1" maxlength="24" placeholder="z. B. Team Gabelstapler" value="${esc(cfg.names[0])}"></div>`;
+  $("#countLbl").textContent = duel ? "Fragen pro Spieler" : "Anzahl der Fragen";
+  if(!COUNTS[cfg.mode].includes(cfg.count)) cfg.count = duel ? 5 : 10;
+  $$(".level").forEach(b=>b.classList.toggle("on", b.dataset.level===cfg.level));
+  $("#cats").innerHTML = Object.entries(KATEGORIEN).map(([k,v])=>
+    `<button class="cat ${cfg.cats.has(k)?'on':''}" data-cat="${k}"><b>${k}</b>${esc(v)}</button>`).join("");
+  renderCounts();
+}
+
+function renderCounts(){
+  const duel = cfg.mode==="duel";
+  const avail = pool().length;
+  const max = duel ? Math.floor(avail/2) : avail;
+  $("#counts").innerHTML = COUNTS[cfg.mode].map(n=>
+    `<button data-n="${n}" class="${n===cfg.count?'on':''}" ${n>max?'disabled':''}>${n}</button>`).join("");
+  const eff = Math.min(cfg.count, max);
+  let h = `${avail} Fragen in den gewählten Themenbereichen verfügbar.`;
+  if(avail===0) h = "⚠️ Bitte mindestens einen Themenbereich auswählen.";
+  else if(eff < cfg.count) h += ` Es werden ${duel? eff+" Fragen pro Spieler":eff+" Fragen"} gestellt.`;
+  else if(duel) h += ` Insgesamt ${cfg.count*2} Fragen.`;
+  $("#countHint").textContent = h;
+  $("#startBtn").disabled = avail===0 || (duel && max<1);
+  $("#startBtn").style.opacity = $("#startBtn").disabled ? .4 : 1;
+}
+
+$$(".mode").forEach(b=>b.onclick=()=>{ cfg.mode=b.dataset.mode; renderSetup(); show("#sSetup"); });
+$$(".level").forEach(b=>b.onclick=()=>{ cfg.level=b.dataset.level; $$(".level").forEach(x=>x.classList.toggle("on",x===b)); });
+$("#counts").onclick = e=>{ const b=e.target.closest("button"); if(!b||b.disabled) return; cfg.count=+b.dataset.n; renderCounts(); };
+$("#cats").onclick = e=>{ const b=e.target.closest(".cat"); if(!b) return; const k=b.dataset.cat;
+  cfg.cats.has(k)?cfg.cats.delete(k):cfg.cats.add(k); b.classList.toggle("on"); renderCounts(); };
+$("#allCats").onclick = ()=>{ cfg.cats=new Set(Object.keys(KATEGORIEN)); renderSetup(); };
+$("#noCats").onclick = ()=>{ cfg.cats=new Set(); renderSetup(); };
+$("#backBtn").onclick = ()=>show("#sStart");
+$("#homeBtn").onclick = ()=>{ if(game && !game.done && !confirm("Laufendes Spiel abbrechen?")) return; game=null; show("#sStart"); };
+$("#startBtn").onclick = ()=>{ readNames(); startGame(); };
+
+function readNames(){
+  cfg.names[0] = ($("#n1")?.value||"").trim();
+  cfg.names[1] = ($("#n2")?.value||"").trim();
+}
+
+/* ---------- Game ---------- */
+function startGame(fixedIdx){
+  const duel = cfg.mode==="duel";
+  const players = duel
+    ? [{name:cfg.names[0]||"Spieler 1",cls:"p1",stars:0},{name:cfg.names[1]||"Spieler 2",cls:"p2",stars:0}]
+    : [{name:cfg.names[0]||"Du",cls:"solo",stars:0}];
+  let idx;
+  if(fixedIdx){ idx = shuffle(fixedIdx); }
+  else {
+    const p = shuffle(pool());
+    const n = duel ? Math.min(cfg.count, Math.floor(p.length/2))*2 : Math.min(cfg.count, p.length);
+    idx = p.slice(0,n);
+  }
+  game = { duel, players, level:cfg.level, idx, pos:0, log:[], revealed:false, done:false, locked:false };
+  renderScores();
+  show("#sPlay");
+  renderQuestion();
+}
+
+function renderScores(){
+  const g = game;
+  $("#scores").innerHTML = g.players.map((p,i)=>
+    `<div class="pl ${p.cls}" id="pl${i}"><span class="turn"><em>ist dran</em></span><span class="dot"></span><span class="nm">${esc(p.name)}</span><span class="st"><span>★</span> ${p.stars}</span></div>`).join("");
+}
+
+function current(){ return game.players[game.duel ? game.pos%2 : 0]; }
+
+function renderQuestion(){
+  const g = game, f = FRAGEN[g.idx[g.pos]], lv = f[g.level];
+  const total = g.idx.length;
+  g.revealed=false; g.locked=false;
+  $("#progTxt").textContent = `Frage ${g.pos+1} von ${total}`;
+  $("#lvTxt").textContent = g.duel ? `Runde ${Math.floor(g.pos/2)+1} von ${total/2}` : "";
+  $("#progBar").style.width = (g.pos/total*100)+"%";
+  $("#qCat").textContent = f.c + " · " + KATEGORIEN[f.c];
+  $("#qLv").textContent = g.level==="a" ? "Anfänger" : "Könner";
+  const p = current();
+  $$(".pl").forEach((el,i)=>el.classList.toggle("act", g.duel && i===g.pos%2));
+  $("#qWho").innerHTML = g.duel ? `<span style="color:var(--${p.cls})">● ${esc(p.name)}</span> ist dran` : "";
+  if(g.level==="a"){ $("#qTerm").textContent = lv.t; $("#qTerm").style.display=""; $("#qText").textContent = lv.q; }
+  else { $("#qTerm").style.display="none"; $("#qText").textContent = lv.q; }
+  $("#solList").innerHTML = lv.s.map(x=>`<li>${esc(x)}</li>`).join("");
+  $("#sol").classList.remove("on");
+  $("#revealBtn").style.display="";
+  $("#rate").classList.remove("on");
+  const other = g.duel ? g.players[(g.pos+1)%2].name : null;
+  $("#rateQ").innerHTML = g.duel
+    ? `Wie gut hat ${esc(p.name)} geantwortet? <small>– ${esc(other)} bewertet</small>`
+    : `Wie gut hast du / habt ihr geantwortet? <small>– ehrlich bewerten</small>`;
+  $("#stars").innerHTML = [0,1,2,3].map(n=>
+    `<button data-s="${n}"><span class="s">${starStr(n)}</span><span class="l">${n} – ${RATE_LABELS[n]}</span></button>`).join("");
+}
+
+function reveal(){
+  if(!game || game.revealed) return;
+  game.revealed = true;
+  $("#sol").classList.add("on");
+  $("#revealBtn").style.display="none";
+  $("#rate").classList.add("on");
+}
+$("#revealBtn").onclick = reveal;
+$("#stars").onclick = e=>{ const b=e.target.closest("button"); if(b) rate(+b.dataset.s); };
+
+function rate(n){
+  const g = game;
+  if(!g || !g.revealed || g.locked) return;
+  g.locked = true;
+  const pi = g.duel ? g.pos%2 : 0, p = g.players[pi];
+  p.stars += n;
+  g.log.push({q:g.idx[g.pos], p:pi, s:n});
+  renderScores();
+  $$(".pl").forEach((el,i)=>el.classList.toggle("act", g.duel && i===pi));
+  const el = $("#pl"+pi);
+  const pop = document.createElement("span"); pop.className="pop"; pop.textContent = n ? `+${n} ★` : "±0";
+  el.appendChild(pop);
+  $$("#stars button").forEach(b=>{ b.disabled=true; if(+b.dataset.s===n){b.style.borderColor="var(--amber)";b.style.background="#fff6e2";} else b.style.opacity=.45; });
+  setTimeout(()=>{
+    g.pos++;
+    if(g.pos>=g.idx.length) finish(); else renderQuestion();
+  }, 900);
+}
+
+document.addEventListener("keydown", e=>{
+  if(!$("#sPlay").classList.contains("on")) return;
+  if(e.target.tagName==="INPUT") return;
+  if(e.code==="Space" || e.key==="Enter"){ e.preventDefault(); reveal(); }
+  else if(["0","1","2","3"].includes(e.key)) rate(+e.key);
+});
+
+/* ---------- End ---------- */
+function reviewList(entries){
+  return entries.map(l=>{
+    const f = FRAGEN[l.q], lv = f[game.level], p = game.players[l.p];
+    const title = game.level==="a" ? `<b>${esc(lv.t)}</b> – ${esc(lv.q)}` : esc(lv.q);
+    return `<div class="rv">${game.duel?`<span class="w" style="background:var(--${p.cls})"></span>`:''}
+      <span class="k">${starStr(l.s)}</span>
+      <div class="t">${title}<small>${f.c} · ${esc(KATEGORIEN[f.c])}${game.duel?' · '+esc(p.name):''}</small>
+      <details class="sol2"><summary>Lösung</summary><ul>${lv.s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details></div></div>`;
+  }).join("");
+}
+
+function finish(){
+  const g = game; g.done = true;
+  $("#progBar").style.width="100%";
+  let html="";
+  if(g.duel){
+    const [a,b] = g.players;
+    const perP = g.idx.length/2, max = perP*3;
+    const tie = a.stars===b.stars, w = a.stars>b.stars?0:1;
+    html += `<div class="result"><div class="big">${tie?'🤝':'🏆'}</div>
+      <h2>${tie?'Unentschieden!':esc(g.players[w].name)+' gewinnt!'}</h2>
+      <p>${perP} Fragen pro Spieler · Stufe ${g.level==="a"?"Anfänger":"Könner"}</p></div>
+      <div class="podium">${g.players.map((p,i)=>`<div class="pod ${!tie&&i===w?'win':''}">
+        <div class="n" style="color:var(--${p.cls})">${esc(p.name)}</div>
+        <div class="v"><span>★</span> ${p.stars}</div><small>von ${max} möglichen Sternen (${Math.round(p.stars/max*100)} %)</small></div>`).join("")}</div>`;
+  } else {
+    const p = g.players[0], max = g.idx.length*3, pc = Math.round(p.stars/max*100);
+    const msg = pc>=85?"Logistik-Profi! 🚚":pc>=65?"Stark – fast alles sitzt.":pc>=40?"Solide Basis – ein paar Lücken schließen.":"Dranbleiben – wiederhole die markierten Fragen.";
+    html += `<div class="result"><div class="big">📦</div><h2>${esc(p.name==="Du"?"Geschafft!":p.name+" – geschafft!")}</h2>
+      <p>${msg}</p>
+      <div class="meter"><i style="width:${pc}%"></i></div>
+      <p><b style="color:var(--navy);font-size:1.3rem">★ ${p.stars}</b> von ${max} Sternen · ${pc} %</p></div>`;
+  }
+  const weak = g.log.filter(l=>l.s<2);
+  if(!g.duel && weak.length){
+    html += `<div class="review"><h3>🔁 Diese ${weak.length} Fragen solltest du wiederholen</h3>${reviewList(weak)}</div>`;
+  }
+  html += `<div class="review"><h3>Alle Fragen dieser Runde</h3>${reviewList(g.log)}</div>`;
+  html += `<div class="endbtns">
+    ${!g.duel && weak.length?'<button class="btn primary" id="again">Schwache Fragen wiederholen</button>':''}
+    <button class="btn ${!g.duel&&weak.length?'dark':'primary'}" id="rematch">${g.duel?'Revanche (neue Fragen)':'Neue Runde'}</button>
+    <button class="btn ghost" id="toSetup">Einstellungen ändern</button></div>`;
+  $("#endPanel").innerHTML = html;
+  show("#sEnd");
+  if($("#again")) $("#again").onclick = ()=>startGame(weak.map(l=>l.q));
+  $("#rematch").onclick = ()=>startGame();
+  $("#toSetup").onclick = ()=>{ renderSetup(); show("#sSetup"); };
+}
+</script>
+</body>
+</html>
